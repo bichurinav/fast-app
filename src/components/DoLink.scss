@@ -1,0 +1,10 @@
+.form-add {
+  margin: 20px 0;
+  padding: 20px;
+  box-shadow: 0 3px 30px rgb(229, 229, 229);
+  border-radius: 8px;
+  &__error {
+    color: red;
+    margin-left: 10px;
+  }
+}
