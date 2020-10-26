@@ -1,3 +1,53 @@
+.menu-link {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.name-hide {
+  margin: 0 15px;
+}
+
 .list {
   margin-top: 10px;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  &__app {
+    flex-basis: 25%;
+    height: 100px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    position: relative;
+    &:hover {
+      transition: .2s;
+      opacity: .77;
+    }
+
+    .bi-backspace {
+      position: absolute;
+      left: 30px;
+      bottom: -5px;
+      cursor: pointer;
+      color: red;
+      &:hover {
+        color: dodgerblue;
+      }
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      font-size: 15.5px;
+    }
+    img {
+      width: 55px;
+      height: auto;
+      border-radius: 8px;
+      margin-right: 10px;
+    }
+  }
 }

@@ -1,6 +1,7 @@
-const { app, ipcMain, BrowserWindow, Menu } = require('electron')
+const { app, ipcMain, BrowserWindow, Menu, dialog, protocol } = require('electron')
 const path = require('path')
 const url = require('url')
+const fs = require('fs')
 const exec = require('child_process').exec
 
 const createWindow = () => {
@@ -21,7 +22,12 @@ const createWindow = () => {
         slashes: true
     }))
 
-    mainWin.webContents.openDevTools()
+    protocol.registerFileProtocol('poster', (request, callback) => {
+        const url = request.url.substr(9,request.url.length -10)
+        callback({path: app.getPath('userData')+'/posters/'+url})
+    })
+
+    // mainWin.webContents.openDevTools()
 
 
     ipcMain.on('open-app', (event, source) => {
@@ -30,11 +36,28 @@ const createWindow = () => {
         })
     })
 
+    ipcMain.on('icon', uploadImageFile)
+
     function execute(command, callback) {
         exec(command, (error, stdout, stderr) => {
             callback(stdout);
         });
     };
+
+
+    function uploadImageFile(event, icon) {
+
+        const fileName = path.basename(icon)
+        const imgFolderPath = path.join(app.getPath('userData'), fileName)
+
+        fs.copyFile(icon, imgFolderPath, (err) => {
+            if (err) throw err;
+            console.log(fileName + ' uploaded.');
+        });
+
+        event.reply('file', imgFolderPath);
+
+    }
 
 }
 
